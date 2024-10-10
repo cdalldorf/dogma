@@ -3,7 +3,7 @@ extends VBoxContainer
 var buttons : Array = []
 @export var scripting_window: PackedScene
 
-func _init() -> void:
+func _init() -> void: 
 	pass
 
 # Called when the node enters the scene tree for the first time.
