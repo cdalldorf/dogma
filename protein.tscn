@@ -1,0 +1,49 @@
+[gd_scene load_steps=5 format=3 uid="uid://ob0m8gyih8tk"]
+
+[ext_resource type="Texture2D" uid="uid://cfk7gs37necy4" path="res://assets/ribosome/protein_1.png" id="1_e7huo"]
+[ext_resource type="Texture2D" uid="uid://cgh1jj6q4628i" path="res://assets/ribosome/protein_2.png" id="2_7qwwu"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nayya"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_e7huo")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_e7huo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_7qwwu")
+}],
+"loop": true,
+"name": &"producing",
+"speed": 2.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ixwla"]
+radius = 16.0
+height = 40.0
+
+[node name="Protein" type="RigidBody2D" groups=["proteins"]]
+z_index = 1
+collision_layer = 2
+collision_mask = 2
+input_pickable = true
+gravity_scale = 0.0
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_nayya")
+animation = &"producing"
+frame_progress = 0.247198
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ixwla")
+metadata/_edit_lock_ = true
