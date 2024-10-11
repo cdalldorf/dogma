@@ -1,0 +1,1 @@
+Hello! This is a hobby project for learning gadot and trying to make an evolution-driven coding game. It's in very early stages right now and I'm learning so please don't judge the organization too hard, but gadot tips are welcome!
