@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://5vyqd2j1cls6"
-path="res://.godot/imported/cell_wall.png-5a588cd1c36fdfc02717c1dc34eb29c9.ctex"
+uid="uid://cfk7gs37necy4"
+path="res://.godot/imported/protein_1.png-b62e6fa18001546525c5d0a038ad9118.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ribosome/cell_wall.png"
-dest_files=["res://.godot/imported/cell_wall.png-5a588cd1c36fdfc02717c1dc34eb29c9.ctex"]
+source_file="res://assets/protein/protein_1.png"
+dest_files=["res://.godot/imported/protein_1.png-b62e6fa18001546525c5d0a038ad9118.ctex"]
 
 [params]
 

@@ -3,13 +3,12 @@ extends RigidBody2D
 @export var protein_scene: PackedScene
 @export var tuning_panel : PackedScene
 var function_tree : ScriptingLinks
+var UI : Control = null
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# initiate function_tree
 	function_tree = ScriptingLinks.new()
-	function_tree.add_node(spawn_protein, [function_tree.head], [])
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -39,6 +38,9 @@ func _on_input_event(viewport: Node, event: InputEvent, shape_idx: int) -> void:
 		self.open_ui()
 
 func open_ui() -> void:
-	var UI = tuning_panel.instantiate()
-	UI.source_node = self
-	add_child(UI)
+	if UI == null:
+		UI = tuning_panel.instantiate()
+		UI.source_node = self
+		add_child(UI)
+	else:
+		UI.show()

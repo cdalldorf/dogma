@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cfk7gs37necy4"
-path="res://.godot/imported/protein_1.png-ce37fb9c06b4fd85fbaef495f667799a.ctex"
+uid="uid://cj2ijuh1s4ieq"
+path="res://.godot/imported/input_wait.png-773f32d74898f704e97f365967ddccff.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/ribosome/protein_1.png"
-dest_files=["res://.godot/imported/protein_1.png-ce37fb9c06b4fd85fbaef495f667799a.ctex"]
+source_file="res://assets/inputs_outputs/input_wait.png"
+dest_files=["res://.godot/imported/input_wait.png-773f32d74898f704e97f365967ddccff.ctex"]
 
 [params]
 

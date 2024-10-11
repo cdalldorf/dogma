@@ -8,11 +8,15 @@ var parents : Array = [] # ParentChildNode
 var children : Array = []
 var run = false
 
+signal output_true
+
 func _init(_func_ref: Callable):
 	func_ref = _func_ref
 
 func call_node():
-	if not run:	func_ref.call()
+	if not run:
+		var check = func_ref.call()
+		if check: output_true.emit()
 	run = true
 
 func check_sibilings():
