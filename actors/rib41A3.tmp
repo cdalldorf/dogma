@@ -1,10 +1,10 @@
 [gd_scene load_steps=8 format=3 uid="uid://dbf51msig34f"]
 
-[ext_resource type="Script" path="res://ribosome.gd" id="1_5v7cl"]
+[ext_resource type="Script" path="res://actors/ribosome.gd" id="1_5v7cl"]
 [ext_resource type="Texture2D" uid="uid://dwe6ptu84vb54" path="res://assets/ribosome/ribo_2.png" id="1_ogwqq"]
-[ext_resource type="PackedScene" uid="uid://ob0m8gyih8tk" path="res://protein.tscn" id="2_000rl"]
+[ext_resource type="PackedScene" uid="uid://ob0m8gyih8tk" path="res://actors/protein.tscn" id="2_000rl"]
 [ext_resource type="Texture2D" uid="uid://edi6bqx07r3b" path="res://assets/ribosome/ribo_1.png" id="2_gmyg1"]
-[ext_resource type="PackedScene" uid="uid://cmk1uvaibishk" path="res://tuning_panel.tscn" id="3_064ne"]
+[ext_resource type="PackedScene" uid="uid://cmk1uvaibishk" path="res://UI_elements/tuning_panel.tscn" id="3_064ne"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nh32u"]
 animations = [{

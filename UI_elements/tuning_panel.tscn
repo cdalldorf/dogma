@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://cmk1uvaibishk"]
+[gd_scene load_steps=8 format=3 uid="uid://cmk1uvaibishk"]
 
-[ext_resource type="Script" path="res://tuning_panel.gd" id="1_bfrj6"]
-[ext_resource type="Theme" uid="uid://bey8g12bahhdk" path="res://tuning_panel_theme.tres" id="1_q2f67"]
-[ext_resource type="Script" path="res://button_options.gd" id="2_aaxpl"]
-[ext_resource type="PackedScene" uid="uid://bb5pfqtxucihi" path="res://scripting_window.tscn" id="3_txjns"]
+[ext_resource type="Script" path="res://UI_elements/tuning_panel.gd" id="1_bfrj6"]
+[ext_resource type="Theme" uid="uid://bey8g12bahhdk" path="res://UI_elements/tuning_panel_theme.tres" id="1_q2f67"]
+[ext_resource type="Script" path="res://UI_elements/button_options.gd" id="2_aaxpl"]
+[ext_resource type="Script" path="res://UI_elements/whiteboard.gd" id="3_sllkq"]
+[ext_resource type="PackedScene" uid="uid://bb5pfqtxucihi" path="res://UI_elements/scripting_window.tscn" id="3_txjns"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iep6w"]
 bg_color = Color(0.912411, 0.823784, 0.82393, 1)
@@ -12,21 +13,27 @@ bg_color = Color(0.912411, 0.823784, 0.82393, 1)
 bg_color = Color(0.913725, 0.823529, 0.823529, 1)
 
 [node name="TuningPanel" type="Control"]
+z_index = 10
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = -648.0
+offset_bottom = -223.0
 grow_horizontal = 2
 grow_vertical = 2
-mouse_filter = 1
 script = ExtResource("1_bfrj6")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 504.0
+offset_bottom = 426.0
+metadata/_edit_lock_ = true
 
 [node name="HBoxContainer" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_left = 180.0
-offset_top = 66.0
-offset_right = 550.0
-offset_bottom = 492.0
+offset_right = 504.0
+offset_bottom = 426.0
 metadata/_edit_lock_ = true
 
 [node name="Whiteboard" type="Panel" parent="HBoxContainer"]
@@ -35,6 +42,8 @@ layout_mode = 2
 mouse_filter = 1
 theme = ExtResource("1_q2f67")
 theme_override_styles/panel = SubResource("StyleBoxFlat_iep6w")
+script = ExtResource("3_sllkq")
+scripting_window = ExtResource("3_txjns")
 metadata/_edit_lock_ = true
 
 [node name="ScrollContainer" type="ScrollContainer" parent="HBoxContainer"]
@@ -47,3 +56,7 @@ metadata/_edit_lock_ = true
 layout_mode = 2
 script = ExtResource("2_aaxpl")
 scripting_window = ExtResource("3_txjns")
+metadata/_edit_lock_ = true
+
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

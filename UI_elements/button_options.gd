@@ -2,6 +2,7 @@ extends VBoxContainer
 
 var buttons : Array = []
 @export var scripting_window: PackedScene
+signal new_scripting_window(text : String, func_ref : Callable, inputs : int, outputs : int)
 
 func _init() -> void: 
 	pass
@@ -13,6 +14,7 @@ func _ready() -> void:
 	if root.source_node:
 		var input_tuple = [
 			['init', Scripting_Utils.init_chain, 0, 1],
+			['pass', Scripting_Utils.pass_on, 1, 1],
 			['spawn_prot', root.source_node.spawn_protein, 1, 0]
 		]
 		for tuple in input_tuple:
@@ -25,24 +27,10 @@ func _ready() -> void:
 			self.add_child(butt)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 func _on_button_pressed(text : String, func_ref : Callable, inputs : int, outputs : int) -> void:
-	var click_position = get_global_mouse_position()
-	var new_wind = scripting_window.instantiate()
-	new_wind.func_node = LinkedListNode.new(func_ref)
-	new_wind.set_text(text)
-	new_wind.num_inputs = inputs
-	new_wind.num_outputs = outputs
+	new_scripting_window.emit(text, func_ref, inputs, outputs)
+	#emit_signal("new_scripting_window", text, func_ref, inputs, outputs)
 
-	# position the new window
-	new_wind.position = click_position - new_wind.get_child(0).size / 2
-
-	# add to the main controller
-	get_parent().get_parent().get_parent().add_child(new_wind)
-	get_parent().get_parent().get_parent().scripting_windows.append(new_wind)
-	
-func _input(event: InputEvent) -> void:
+func _input(_event: InputEvent) -> void:
 	pass

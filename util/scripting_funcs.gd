@@ -6,9 +6,8 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
-
+static func pass_on() -> bool:
+	return true
+	
 static func init_chain() -> bool:
 	return true

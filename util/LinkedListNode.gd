@@ -19,6 +19,12 @@ func call_node():
 		if check: output_true.emit()
 	run = true
 
+func find_root() -> LinkedListNode:
+	var curr = self
+	while len(curr.parents) > 0:
+		curr = curr.parents[0]
+	return(curr)
+
 func check_sibilings():
 	var sibs = []
 	for parent in parents:

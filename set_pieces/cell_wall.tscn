@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://iysmwlpo745x"]
 
-[ext_resource type="Script" path="res://cell_wall.gd" id="1_713ec"]
-[ext_resource type="Texture2D" uid="uid://5vyqd2j1cls6" path="res://assets/ribosome/cell_wall.png" id="1_ak70c"]
+[ext_resource type="Script" path="res://set_pieces/cell_wall.gd" id="1_713ec"]
+[ext_resource type="Texture2D" uid="uid://5vyqd2j1cls6" path="res://assets/cell_wall/cell_wall.png" id="1_ak70c"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jln20"]
 radius = 195.715

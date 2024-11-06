@@ -4,16 +4,12 @@ var source_node : Node = null
 var mouseover = false
 var dragging = false
 var wire_drag = null
-var scripting_windows = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$HBoxContainer/Whiteboard.wires_connect.connect(_wires_connect)
 	pass # Replace with function body.
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
 
 # This function will be called every time input is received
 func _input(event: InputEvent) -> void:
@@ -30,7 +26,7 @@ func _input(event: InputEvent) -> void:
 	if dragging and event is InputEventMouseMotion:
 		# check if a child is being dragged or wire being drawn
 		var other_moving = false
-		for wind in scripting_windows:
+		for wind in get_node('HBoxContainer').get_node('Whiteboard').scripting_windows:
 			if wind.dragging or wind.drawing:
 				other_moving = true
 				break
@@ -51,3 +47,10 @@ func _on_button_pressed() -> void:
 # Handle button release event
 func _on_button_released() -> void:
 	dragging = false
+
+
+# functions for handling ScriptingWindow and ScriptingLinks connections
+func _wires_connect(input : Node, output : Node):
+	input.func_node.add_parent(output.func_node)
+	var func_head = input.func_node.find_root()
+	get_parent().function_tree.head = func_head

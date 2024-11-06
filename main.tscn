@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://dwg2b1mujf1pj"]
+
+[ext_resource type="PackedScene" uid="uid://byp6teflqtufn" path="res://UI_elements/hud.tscn" id="1_lql6m"]
+[ext_resource type="Script" path="res://main.gd" id="1_p44ue"]
+[ext_resource type="PackedScene" uid="uid://dsaphc6nnig5a" path="res://actors/metabolite.tscn" id="3_3miuv"]
+[ext_resource type="PackedScene" uid="uid://dbf51msig34f" path="res://actors/ribosome.tscn" id="3_ik6k7"]
+[ext_resource type="PackedScene" uid="uid://iysmwlpo745x" path="res://set_pieces/cell_wall.tscn" id="3_u67b2"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_cww25"]
+size = Vector2(1152, 647)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_p44ue")
+ribo_scene = ExtResource("3_ik6k7")
+metab_scene = ExtResource("3_3miuv")
+
+[node name="HUD" parent="." instance=ExtResource("1_lql6m")]
+script = null
+
+[node name="CellWall" parent="." instance=ExtResource("3_u67b2")]
+script = null
+metadata/_edit_lock_ = true
+
+[node name="GameClock" type="Timer" parent="."]
+wait_time = 0.2
+autostart = true
+
+[node name="SpawnArea" type="Area2D" parent="."]
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnArea"]
+position = Vector2(577, 324)
+shape = SubResource("RectangleShape2D_cww25")
+
+[connection signal="timeout" from="GameClock" to="." method="_on_game_clock_timeout"]
