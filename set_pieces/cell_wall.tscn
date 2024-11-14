@@ -7,6 +7,7 @@
 radius = 195.715
 
 [node name="CellWall" type="Node2D"]
+position = Vector2(-670, -324)
 script = ExtResource("1_713ec")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -36,5 +37,15 @@ position = Vector2(671.5, 324)
 scale = Vector2(2.37562, 1.66667)
 texture = ExtResource("1_ak70c")
 metadata/_edit_lock_ = true
+
+[node name="ATP_count_label" type="Label" parent="."]
+offset_left = 345.0
+offset_top = 122.0
+offset_right = 395.0
+offset_bottom = 152.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 40
+text = "200"
+metadata/_edit_use_anchors_ = true
 
 [connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

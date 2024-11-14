@@ -2,10 +2,16 @@ extends Node2D
 
 @export var ribo_scene: PackedScene
 @export var metab_scene: PackedScene
+@export var cell_scene: PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HUD/RibosomeButton.pressed.connect(_on_hud_ribo_button)
+	
+	# for now just spawn one cell to play around with
+	var cell = cell_scene.instantiate()
+	cell.position = get_viewport_rect().size / 2
+	add_child(cell)
 	
 
 func spawn_metab(location : Vector2) -> void:

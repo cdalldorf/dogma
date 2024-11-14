@@ -24,10 +24,9 @@ func spawn_protein() -> void:
 	# select a spawn location
 	var pos = $CollisionShape2D.position
 	prot.position = pos
+	get_parent().update_ATP(-1)
 	
-	add_child(prot)
-	
-	
+	get_parent().add_child(prot)
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if (event.is_pressed()):
