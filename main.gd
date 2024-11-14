@@ -14,9 +14,11 @@ func _ready() -> void:
 	add_child(cell)
 	
 
-func spawn_metab(location : Vector2) -> void:
+func spawn_metab(location : Vector2, type : int) -> void:
 	# create new instance
 	var metab = metab_scene.instantiate()
+	metab.type = type
+	metab.update_appearance()
 	
 	metab.position = location
 	add_child(metab)
@@ -59,9 +61,13 @@ func _on_game_clock_timeout() -> void:
 	var x = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
 	var y = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
 	var rand_point = Vector2(x, y)
+	var x2 = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
+	var y2 = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
+	var rand_point2 = Vector2(x2, y2)
 	
 	# Spawn the item at the random point
-	spawn_metab(rand_point)
+	spawn_metab(rand_point, 0)
+	spawn_metab(rand_point2, 1)
 	
 	# restart the timer
 	$GameClock.start() 

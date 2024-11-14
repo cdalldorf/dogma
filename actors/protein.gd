@@ -5,6 +5,7 @@ var target_metabolite = null
 var can_consume = true
 var cooldown_time = 5
 var lifespan = 60
+var type = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -32,7 +33,7 @@ func _process(delta):
 
 # Detect when metabolite is nearby
 func _body_entered_range(body):
-	if body.is_in_group("metabolite"):
+	if body.is_in_group("metabolite") and body.type == type:
 		if not body.selected:
 			target_metabolite = body
 			body.selected = true
@@ -46,7 +47,7 @@ func eat_metabolite(body) -> void:
 
 func _collided(body) -> void:
 	print('hi!')
-	if body.is_in_group('metabolite') and can_consume:
+	if can_consume and body.is_in_group('metabolite') and body.type == type:
 		eat_metabolite(body)
 		
 # Reset the ability to consume after the cooldown

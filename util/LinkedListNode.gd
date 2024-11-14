@@ -8,7 +8,7 @@ var parents : Array = [] # ParentChildNode
 var children : Array = []
 var run = false
 
-signal output_true
+signal func_output # there's multiple outputs now, this doesn't work, how about you send a message for them to do this
 
 func _init(_func_ref: Callable):
 	func_ref = _func_ref
@@ -16,7 +16,8 @@ func _init(_func_ref: Callable):
 func call_node():
 	if not run:
 		var check = func_ref.call()
-		if check: output_true.emit()
+		print(func_ref)
+		func_output.emit(check) # update the UI
 	run = true
 
 func find_root() -> LinkedListNode:

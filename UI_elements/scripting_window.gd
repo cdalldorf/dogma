@@ -17,8 +17,15 @@ signal socket_pressed(socket : ScriptingSocket)
 func _ready() -> void:
 	call_deferred("create_sockets")
 	if func_node != null:
-		func_node.output_true.connect(_on_function_completed)
+		func_node.func_output.connect(function_ran)
 
+func function_ran(check : Array) -> void:
+	for i in range(output_sockets.size()):
+		if check[i]:
+			output_sockets[i].texture_normal = ready_texture
+			for downstream in output_sockets[i].downstream:
+				downstream.texture_normal = ready_texture
+			
 # gets called when the function is run for this node
 func _on_function_completed() -> void:
 	for socket in output_sockets:

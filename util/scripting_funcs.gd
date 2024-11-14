@@ -6,8 +6,14 @@ func _ready() -> void:
 	pass # Replace with function body.
 
 
-static func pass_on() -> bool:
-	return true
+static func pass_on() -> Array:
+	return [true]
 	
-static func init_chain() -> bool:
-	return true
+static func init_chain() -> Array:
+	return [true]
+	
+static func random_switch(chance : float = .5) -> Array:
+	if randf() < chance:
+		return [true, false]
+	else:
+		return [false, true]

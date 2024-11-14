@@ -1,10 +1,19 @@
-[gd_scene load_steps=5 format=3 uid="uid://dsaphc6nnig5a"]
+[gd_scene load_steps=6 format=3 uid="uid://dsaphc6nnig5a"]
 
 [ext_resource type="Script" path="res://actors/metabolite.gd" id="1_pyg82"]
 [ext_resource type="Texture2D" uid="uid://betbxrbiarkoa" path="res://assets/metabolite/metabolite_default.png" id="1_sfyus"]
+[ext_resource type="Texture2D" uid="uid://c0r2josoqjsn8" path="res://assets/metabolite/metabolite_1.png" id="2_56ljc"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dhkru"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_56ljc")
+}],
+"loop": true,
+"name": &"1",
+"speed": 5.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("1_sfyus")
@@ -27,6 +36,7 @@ script = ExtResource("1_pyg82")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 scale = Vector2(0.2, 0.2)
 sprite_frames = SubResource("SpriteFrames_dhkru")
+animation = &"1"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_j3ho6")

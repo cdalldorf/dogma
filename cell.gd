@@ -18,7 +18,7 @@ func spawn_ribosome() -> void:
 	var ribo = ribo_scene.instantiate()
 	
 	# select a spawn location
-	var pos = global_position# + $CellWall/Area2D/CollisionShape2D.shape.radius / 2 # get_viewport_rect().size / 2
+	#var pos = global_position# + $CellWall/Area2D/CollisionShape2D.shape.radius / 2 # get_viewport_rect().size / 2
 	ribo.position = Vector2.ZERO
 	
 	add_child(ribo)
