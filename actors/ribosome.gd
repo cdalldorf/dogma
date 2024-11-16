@@ -2,6 +2,7 @@ extends RigidBody2D
 
 @export var protein_scene: PackedScene
 @export var tuning_panel : PackedScene
+@export var lipid_scene : PackedScene
 var function_tree : ScriptingLinks
 var UI : Control = null
 
@@ -18,6 +19,11 @@ func timer_tick() -> void:
 	# restart the timer
 	$ProcessTimer.start() 
 
+
+############################################################################
+### Spawn Functions
+############################################################################
+
 func spawn_protein(prot_type : int = 0) -> void:
 		# create new ribosome instance
 	var prot = protein_scene.instantiate()
@@ -28,7 +34,30 @@ func spawn_protein(prot_type : int = 0) -> void:
 	prot.position = pos
 	get_parent().update_ATP(-1)
 	
+	# give velocity and a direction to spread out a little bit
+	var angle = randf_range(0, 2*PI)
+	var speed = randf_range(10, 30)
+	prot.linear_velocity = Vector2(cos(angle), sin(angle)) * speed
+	
 	get_parent().add_child(prot)
+
+func spawn_lipid() -> void:
+	var lipid = lipid_scene.instantiate()
+	
+	# select a spawn location
+	var pos = $CollisionShape2D.position
+	lipid.position = pos
+	get_parent().update_ATP(-1)
+	
+	# give velocity and a direction to hit cell wall
+	var angle = randf_range(0, 2*PI)
+	var speed = randf_range(20, 50)
+	lipid.linear_velocity = Vector2(cos(angle), sin(angle)) * speed
+	
+	get_parent().add_child(lipid)
+
+
+
 
 func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if (event.is_pressed()):

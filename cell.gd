@@ -3,12 +3,15 @@ extends Node2D
 var ATP_ct = 200 # starting ATP value
 
 @export var ribo_scene: PackedScene
+@export var cell_wall_scene: PackedScene
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$CellWall/Area2D.body_exited.connect(_on_exit_cell_wall)
+	var cell_wall = cell_wall_scene.instantiate()
+	cell_wall.exit_cell_wall.connect(_on_exit_cell_wall)
+	add_child(cell_wall)
 	spawn_ribosome()
-
+	
 func update_ATP(amount: int):
 	ATP_ct += amount
 	$CellWall/ATP_count_label.text = str(ATP_ct)

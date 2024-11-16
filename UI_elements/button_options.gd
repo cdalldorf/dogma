@@ -16,7 +16,8 @@ func _ready() -> void:
 		var input_tuple = [
 			['pass', Scripting_Utils.pass_on, 1, 1, []],
 			['random_switch', Scripting_Utils.random_switch, 1, 2, []],
-			['spawn_prot', root.source_node.spawn_protein, 1, 0, [0, 1]]
+			['spawn_prot', root.source_node.spawn_protein, 1, 0, [0, 1]],
+			['spawn_lipid', root.source_node.spawn_lipid, 1, 0, []]
 		]
 		for tuple in input_tuple:
 			var butt = Button.new()

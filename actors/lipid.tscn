@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://bwljq104cxvm"]
+
+[ext_resource type="Script" path="res://lipid.gd" id="1_ak5lt"]
+[ext_resource type="Texture2D" uid="uid://btynd0h4jaqx0" path="res://assets/lipids/wall_piece.png" id="2_cwrsn"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_vk247"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_cwrsn")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_sn845"]
+radius = 1.36855
+height = 11.6613
+
+[node name="lipid" type="RigidBody2D"]
+collision_layer = 8
+collision_mask = 8
+mass = 0.01
+gravity_scale = 0.0
+contact_monitor = true
+script = ExtResource("1_ak5lt")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.2, 0.2)
+sprite_frames = SubResource("SpriteFrames_vk247")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 1.04022
+shape = SubResource("CapsuleShape2D_sn845")
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 30.0

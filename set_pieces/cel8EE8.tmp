@@ -3,22 +3,24 @@
 [ext_resource type="Script" path="res://set_pieces/cell_wall.gd" id="1_713ec"]
 [ext_resource type="Texture2D" uid="uid://5vyqd2j1cls6" path="res://assets/cell_wall/cell_wall.png" id="1_ak70c"]
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_qa7cg"]
-radius = 157.991
+[sub_resource type="CircleShape2D" id="CircleShape2D_kblf6"]
+radius = 153.63
 
-[node name="CellWall" type="RigidBody2D"]
+[node name="CellWall" type="Node2D"]
 position = Vector2(-670, -324)
-collision_layer = 15
-collision_mask = 15
-mass = 100.0
-gravity_scale = 0.0
-contact_monitor = true
 script = ExtResource("1_713ec")
+
+[node name="Area2D" type="Area2D" parent="."]
+position = Vector2(671.5, 324)
+collision_layer = 0
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_kblf6")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 position = Vector2(671.5, 324)
 texture = ExtResource("1_ak70c")
-metadata/_edit_lock_ = true
 
 [node name="ATP_count_label" type="Label" parent="."]
 z_index = 5
@@ -30,21 +32,13 @@ theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 40
 text = "200"
 metadata/_edit_use_anchors_ = true
-metadata/_edit_lock_ = true
 
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
-build_mode = 1
-polygon = PackedVector2Array(670, 168, 695, 169, 716, 175, 736, 182, 754, 191, 769, 202, 782, 214, 794, 227, 804, 241, 813, 258, 820, 275, 825, 294, 828, 310, 827, 330, 827, 347, 824, 362, 816, 382, 809, 400, 797, 416, 784, 431, 774, 441, 764, 450, 753, 456, 739, 465, 722, 471, 702, 478, 684, 480, 666, 481, 647, 477, 624, 472, 608, 465, 591, 458, 579, 449, 566, 438, 554, 427, 545, 415, 536, 401, 530, 385, 523, 370, 517, 350, 516, 334, 516, 321, 518, 307, 519, 294, 523, 277, 528, 263, 535, 248, 544, 234, 555, 220, 568, 208, 578, 198, 588, 191, 602, 184, 619, 177, 631, 173, 644, 172, 658, 168)
-metadata/_edit_lock_ = true
-
-[node name="InternalBody" type="Area2D" parent="."]
-collision_layer = 0
+[node name="Area2D_barrier" type="Area2D" parent="."]
+collision_layer = 15
 collision_mask = 15
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InternalBody"]
-position = Vector2(671.5, 324)
-scale = Vector2(0.95, 0.95)
-shape = SubResource("CircleShape2D_qa7cg")
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Area2D_barrier"]
+build_mode = 1
+polygon = PackedVector2Array(670, 168, 695, 169, 716, 175, 736, 182, 754, 191, 769, 202, 782, 214, 794, 227, 804, 241, 813, 258, 820, 275, 825, 294, 828, 310, 827, 330, 827, 347, 824, 362, 816, 382, 809, 400, 797, 416, 784, 431, 774, 441, 764, 450, 753, 456, 739, 465, 722, 471, 702, 478, 684, 480, 666, 481, 647, 477, 624, 472, 608, 465, 591, 458, 579, 449, 566, 438, 554, 427, 545, 415, 536, 401, 530, 385, 523, 370, 517, 350, 516, 334, 516, 321, 518, 307, 519, 294, 523, 277, 528, 263, 535, 248, 544, 234, 555, 220, 568, 208, 578, 198, 588, 191, 602, 184, 619, 177, 631, 173, 644, 172, 658, 168)
 
-[connection signal="body_entered" from="." to="." method="_on_barrier_body_enter"]
-[connection signal="body_exited" from="." to="." method="_on_barrier_body_exit"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]

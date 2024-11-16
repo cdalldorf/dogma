@@ -1,6 +1,6 @@
 extends RigidBody2D
 
-var gravity_strength = 500
+var gravity_strength = 50
 var target_metabolite = null
 var can_consume = true
 var cooldown_time = 5

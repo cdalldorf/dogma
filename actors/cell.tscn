@@ -7,7 +7,4 @@
 [node name="cell" type="Node2D"]
 script = ExtResource("1_06w66")
 ribo_scene = ExtResource("2_330yw")
-
-[node name="CellWall" parent="." instance=ExtResource("2_gw5va")]
-script = null
-metadata/_edit_lock_ = true
+cell_wall_scene = ExtResource("2_gw5va")
