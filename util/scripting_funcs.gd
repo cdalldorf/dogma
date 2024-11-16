@@ -12,7 +12,7 @@ static func pass_on() -> Array:
 static func init_chain() -> Array:
 	return [true]
 	
-static func random_switch(chance : float = .5) -> Array:
+static func random_switch(chance : float = .5) -> Array: # eventually make this adjustable
 	if randf() < chance:
 		return [true, false]
 	else:

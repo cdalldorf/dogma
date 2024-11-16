@@ -11,15 +11,17 @@ func _ready() -> void:
 	function_tree = ScriptingLinks.new()
 
 func timer_tick() -> void:
-	# go through list of functions
-	function_tree.run_next()
+	# go through list of functions if they've been created yet
+	if function_tree.head:
+		function_tree.run_next()
 	
 	# restart the timer
 	$ProcessTimer.start() 
 
-func spawn_protein() -> void:
+func spawn_protein(prot_type : int = 0) -> void:
 		# create new ribosome instance
 	var prot = protein_scene.instantiate()
+	prot.setup(prot_type)
 	
 	# select a spawn location
 	var pos = $CollisionShape2D.position

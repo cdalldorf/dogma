@@ -4,7 +4,7 @@ var source_node : Node = null
 var mouseover = false
 var dragging = false
 var wire_drag = null
-
+	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HBoxContainer/Whiteboard.wires_connect.connect(_wires_connect)
@@ -52,5 +52,3 @@ func _on_button_released() -> void:
 # functions for handling ScriptingWindow and ScriptingLinks connections
 func _wires_connect(input : Node, output : Node):
 	input.func_node.add_parent(output.func_node)
-	var func_head = input.func_node.find_root()
-	get_parent().function_tree.head = func_head

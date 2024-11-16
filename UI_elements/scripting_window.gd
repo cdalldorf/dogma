@@ -11,11 +11,25 @@ var num_inputs : int = 0
 var num_outputs : int = 0
 var input_sockets = []
 var output_sockets = []
+var options = []
 signal socket_pressed(socket : ScriptingSocket)
+
+
+# call every time after instantiating object
+func setup(func_ref, text : String, inputs : int, outputs : int, inp_options = []) -> void:
+	if func_ref is Callable:
+		func_node = LinkedListNode.new(func_ref)
+	elif func_ref is LinkedListNode:
+		func_node = func_ref
+	set_text(text)
+	num_inputs = inputs
+	num_outputs = outputs
+	options = inp_options
 
 # Called when the node is added to the scene
 func _ready() -> void:
 	call_deferred("create_sockets")
+	call_deferred("populate_options")
 	if func_node != null:
 		func_node.func_output.connect(function_ran)
 
@@ -38,12 +52,14 @@ func _on_function_tree_reset() -> void:
 	for socket in input_sockets+output_sockets:
 		socket.texture_normal = wait_texture
 
+
+
+######################################################
+#### UI intantiate functions
+######################################################
 func create_sockets() -> void:
 	create_input_sockets(num_inputs)
 	create_output_sockets(num_outputs)
-
-func set_text(text : String) -> void:
-	$Panel/RichTextLabel.text = text
 
 func create_input_sockets(count : int) -> void:
 	var panel_width = $Panel.size.x
@@ -65,14 +81,27 @@ func create_output_sockets(count : int) -> void:
 	for i in range(count):
 		var socket = ScriptingSocket.new(false, "Input " + str(i + 1))
 		socket.texture_normal = wait_texture
-		socket.scale.x = 0.3
-		socket.scale.y = 0.3
-		socket.name = "Output " + str(i + 1)
 		socket.position = Vector2(spacing*(i+1) - (socket.size.x / 2), $Panel.size.y)  # Adjust positioning based on layout needs
 		socket.mouse_filter = Control.MOUSE_FILTER_PASS
 		socket.pressed.connect(_on_socket_pressed.bind(socket)) #  butt.pressed.connect(_on_button_pressed.bind(tuple[0], tuple[1], tuple[2], tuple[3]))
 		add_child(socket)
 		output_sockets.append(socket)
+
+func populate_options() -> void:
+	for option in options:
+		$Panel/OptionButton.add_item(str(option))
+	$Panel/OptionButton.item_selected.connect(update_func_opts)
+
+
+##################################################
+# UI interacted with
+##################################################
+
+func update_func_opts(option):
+	func_node.inputs = option
+
+func set_text(text : String) -> void:
+	$Panel/RichTextLabel.text = text
 
 # handle socket selection
 func _on_socket_pressed(socket : ScriptingSocket) -> void:
@@ -107,7 +136,6 @@ func _input(event: InputEvent) -> void:
 		new_position.x = clamp(new_position.x, whiteboard_rect.position.x, whiteboard_rect.position.x + whiteboard_rect.size.x - get_child(0).size.x)
 		new_position.y = clamp(new_position.y, whiteboard_rect.position.y, whiteboard_rect.position.y + whiteboard_rect.size.y - get_child(0).size.y)
 		position = new_position#event.relative
-		print()
 		
 		# check for lines
 		for socket in input_sockets:

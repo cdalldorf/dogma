@@ -4,7 +4,7 @@ var gravity_strength = 500
 var target_metabolite = null
 var can_consume = true
 var cooldown_time = 5
-var lifespan = 60
+var lifespan = 20
 var type = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -14,6 +14,10 @@ func _ready() -> void:
 	$DeathTimer.timeout.connect(_on_death_timer_timeout)
 	$DeathTimer.start(lifespan)
 	$DeathTimer.start()
+
+func setup(prot_type):
+	type = prot_type
+	# add changing appearance here based on type, other setup functions
 
 func _on_death_timer_timeout() -> void:
 	queue_free()
@@ -46,7 +50,6 @@ func eat_metabolite(body) -> void:
 	$CooldownTimer.start(cooldown_time)
 
 func _collided(body) -> void:
-	print('hi!')
 	if can_consume and body.is_in_group('metabolite') and body.type == type:
 		eat_metabolite(body)
 		

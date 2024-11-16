@@ -9,20 +9,31 @@ signal wires_connect(input : Node, output : Node)
 func _ready() -> void:
 	var butt_opts = get_parent().get_node('ScrollContainer').get_child(0)
 	butt_opts.new_scripting_window.connect(_new_scripting_window)
-
+	
+	# create the init_node, set to head of function tree
+	var new_wind = scripting_window.instantiate()
+	var init_ref = get_parent().get_parent().source_node.function_tree.head
+	new_wind.setup(init_ref, 'init', 0, 1, [])
+	
+	# position the new window
+	new_wind.position = position# - new_wind.get_child(0).size / 2
+	
+	# connect its signals
+	new_wind.socket_pressed.connect(_socket_pressed)
+	
+	# add to the main controller
+	add_child(new_wind)
+	scripting_windows.append(new_wind)
 
 func _on_function_tree_reset():
 	for wind in scripting_windows:
 		wind._on_function_tree_reset()
 
 
-func _new_scripting_window(text: String, func_ref: Callable, inputs: int, outputs: int) -> void:
+func _new_scripting_window(text: String, func_ref: Callable, inputs: int, outputs: int, options : Array) -> void:
 	#var click_position = get_global_mouse_position()
 	var new_wind = scripting_window.instantiate()
-	new_wind.func_node = LinkedListNode.new(func_ref)
-	new_wind.set_text(text)
-	new_wind.num_inputs = inputs
-	new_wind.num_outputs = outputs
+	new_wind.setup(func_ref, text, inputs, outputs, options)
 
 	# position the new window
 	new_wind.position = position# - new_wind.get_child(0).size / 2
