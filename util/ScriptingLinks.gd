@@ -10,7 +10,19 @@ signal tree_reset
 func _init():
 	head = LinkedListNode.new(Scripting_Utils.init_chain)
 	prev_node = head
-	
+
+func duplicate() -> ScriptingLinks: # creates full duplication
+	var new_copy = ScriptingLinks.new()
+	new_copy.head = head.duplicate()
+	copy_children(head, new_copy.head)
+	return(new_copy)
+
+func copy_children(head, new_head):
+	for child in head.children:
+		var new_child = child.duplicate()
+		new_head.children.append(new_child)
+		copy_children(child, new_child)
+
 # Add a function reference to the linked list
 func add_node(func_ref: Callable, parents: Array, children: Array) -> void:
 	var new_node = LinkedListNode.new(func_ref)

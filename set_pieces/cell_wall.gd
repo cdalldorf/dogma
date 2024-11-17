@@ -1,21 +1,26 @@
 extends Node2D
 signal exit_cell_wall(body)
+signal enter_cell_wall(body)
 var radius : float
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$InternalBody.body_exited.connect(_on_body_exit)
+	$InternalBody.body_entered.connect(_on_body_enter)
 	radius = 150
 	update_size()
 	#body_exited.connect(_on_barrier_body_exit)
 	
 
-
 func _on_body_exit(body) -> void:
-	if body.is_in_group('lipid'):
+	if body.is_in_group('lipids'):
 		update_size(1)
 		body.queue_free()
-	pass
+	else:
+		exit_cell_wall.emit(body)
+
+func _on_body_enter(body) -> void:
+	enter_cell_wall.emit(body)
 
 func update_size(change : float = 0) -> void:
 	var delta = change * 10 # scale down, increasing circumference by this much)

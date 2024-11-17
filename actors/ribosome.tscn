@@ -35,6 +35,7 @@ height = 206.0
 
 [node name="ribosome" type="RigidBody2D" groups=["ribosomes"]]
 input_pickable = true
+mass = 10.0
 gravity_scale = 0.0
 script = ExtResource("1_5v7cl")
 protein_scene = ExtResource("2_000rl")
@@ -42,16 +43,21 @@ tuning_panel = ExtResource("3_064ne")
 lipid_scene = ExtResource("4_0tmb1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.5, 0.5)
 sprite_frames = SubResource("SpriteFrames_nh32u")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 rotation = 1.5708
+scale = Vector2(0.5, 0.5)
 shape = SubResource("CapsuleShape2D_40tue")
 metadata/_edit_lock_ = true
 
 [node name="ProcessTimer" type="Timer" parent="."]
 autostart = true
+
+[node name="DeathTimer" type="Timer" parent="."]
+wait_time = 10.0
 
 [connection signal="input_event" from="." to="." method="_on_input_event"]
 [connection signal="timeout" from="ProcessTimer" to="." method="timer_tick"]

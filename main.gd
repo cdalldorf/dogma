@@ -57,17 +57,19 @@ func _on_game_clock_timeout() -> void:
 	var rect_position = rect.position
 	var rect_size = rect.size
 	
-	# Generate a random position within the global boundaries
-	var x = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
-	var y = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
-	var rand_point = Vector2(x, y)
-	var x2 = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
-	var y2 = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
-	var rand_point2 = Vector2(x2, y2)
+	# spawn a bunch of metabolites
+	for _foo in range(5): # do this 5 times
+		# Generate a random position within the global boundaries
+		var x = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
+		var y = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
+		var rand_point = Vector2(x, y)
+		var x2 = randf_range(rect_position.x, rect_position.x + rect_size.x) - rect_position.x
+		var y2 = randf_range(rect_position.y, rect_position.y + rect_size.y) - rect_position.y
+		var rand_point2 = Vector2(x2, y2)
 	
-	# Spawn the item at the random point
-	spawn_metab(rand_point, 0)
-	spawn_metab(rand_point2, 1)
+		# Spawn the item at the random point
+		spawn_metab(rand_point, 0)
+		spawn_metab(rand_point2, 1)
 	
 	# restart the timer
 	$GameClock.start() 

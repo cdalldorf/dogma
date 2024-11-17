@@ -5,7 +5,7 @@ var selected = false # flag to see if a protein has selected to consume it
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	add_to_group('metabolite')
+	add_to_group('metabolites')
 	$DeathTimer.start()
 
 func _on_death_timer_timeout() -> void:

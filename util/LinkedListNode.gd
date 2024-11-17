@@ -15,6 +15,10 @@ func _init(_func_ref, _inputs = null):
 	func_ref = _func_ref
 	inputs = _inputs
 
+func duplicate(): # does not duplicate parents/children
+	var new_copy = LinkedListNode.new(func_ref, inputs)
+	return(new_copy)
+
 func call_node():
 	if not run:
 		var check = null

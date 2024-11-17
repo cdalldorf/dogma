@@ -8,9 +8,8 @@ radius = 157.991
 
 [node name="CellWall" type="RigidBody2D"]
 position = Vector2(-670, -324)
-collision_layer = 15
-collision_mask = 15
-mass = 100.0
+collision_mask = 11
+mass = 1000.0
 gravity_scale = 0.0
 contact_monitor = true
 script = ExtResource("1_713ec")
