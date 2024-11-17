@@ -13,7 +13,8 @@ static func init_chain() -> Array:
 	return [true]
 	
 static func random_switch(chance : float = .5) -> Array: # eventually make this adjustable
-	if randf() < chance:
+	var check = randf()
+	if check < chance:
 		return [true, false]
 	else:
 		return [false, true]

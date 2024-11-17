@@ -32,7 +32,7 @@ func _on_function_tree_reset():
 
 func _new_scripting_window(text: String, func_ref: Callable, inputs: int, outputs: int, options : Array) -> void:
 	#var click_position = get_global_mouse_position()
-	var new_wind = scripting_window.instantiate()
+	var new_wind = scripting_window.instantiate(outputs)
 	new_wind.setup(func_ref, text, inputs, outputs, options)
 
 	# position the new window
@@ -88,4 +88,4 @@ func draw_wires(socket_a: ScriptingSocket, socket_b: ScriptingSocket):
 	
 	# need to also functionally connect wires (make the LinkedListNodes related)
 	socket_b.downstream.append(socket_a)
-	wires_connect.emit(socket_a.get_parent(), socket_b.get_parent())
+	wires_connect.emit(socket_a.get_parent(), socket_b.get_parent(), socket_b.index)

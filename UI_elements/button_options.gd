@@ -15,7 +15,7 @@ func _ready() -> void:
 	if root.source_node:
 		var input_tuple = [
 			['pass', Scripting_Utils.pass_on, 1, 1, []],
-			['random_switch', Scripting_Utils.random_switch, 1, 2, []],
+			['random_switch', Scripting_Utils.random_switch, 1, 2, [.1, .2, .3, .4, .5, .6, .7, .8, .9]],
 			['spawn_ribo', root.source_node.spawn_ribosome, 1, 0, []],
 			['spawn_prot', root.source_node.spawn_protein, 1, 0, [0, 1]],
 			['spawn_lipid', root.source_node.spawn_lipid, 1, 0, []]

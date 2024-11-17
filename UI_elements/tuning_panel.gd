@@ -4,6 +4,7 @@ var source_node : Node = null
 var mouseover = false
 var dragging = false
 var wire_drag = null
+var submenu_just_closed = false
 	
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -13,6 +14,12 @@ func _ready() -> void:
 
 # This function will be called every time input is received
 func _input(event: InputEvent) -> void:
+	# check if submenu is open, priority held
+	if submenu_just_closed:
+		dragging = false
+		submenu_just_closed = false
+		return
+	
 	# Check for mouse button events
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
@@ -50,5 +57,5 @@ func _on_button_released() -> void:
 
 
 # functions for handling ScriptingWindow and ScriptingLinks connections
-func _wires_connect(input : Node, output : Node):
-	input.func_node.add_parent(output.func_node)
+func _wires_connect(input : Node, output : Node, socket_index : int):
+	output.func_node.add_child(input.func_node, socket_index)

@@ -5,6 +5,8 @@ extends Control
 var drawing = false # is a wire being drawn currently, pause dragging
 var dragging = false
 var mouseover = false
+var drop_menu_open = false
+var drop_menu_just_closed = false
 var drag_offset = Vector2()
 var func_node : LinkedListNode = null
 var num_inputs : int = 0
@@ -12,13 +14,16 @@ var num_outputs : int = 0
 var input_sockets = []
 var output_sockets = []
 var options = []
+var index_to_option : Dictionary
+
 signal socket_pressed(socket : ScriptingSocket)
+
 
 
 # call every time after instantiating object
 func setup(func_ref, text : String, inputs : int, outputs : int, inp_options = []) -> void:
 	if func_ref is Callable:
-		func_node = LinkedListNode.new(func_ref)
+		func_node = LinkedListNode.new(func_ref, outputs)
 	elif func_ref is LinkedListNode:
 		func_node = func_ref
 	set_text(text)
@@ -66,7 +71,7 @@ func create_input_sockets(count : int) -> void:
 	var spacing = panel_width / (count + 1)
 	
 	for i in range(count):
-		var socket = ScriptingSocket.new(true, "Input " + str(i + 1))
+		var socket = ScriptingSocket.new(true, "Input " + str(i + 1), i)
 		socket.texture_normal = wait_texture
 		socket.position = Vector2(spacing*(i+1) - (socket.size.x / 2), 0)  # Adjust positioning based on layout needs
 		socket.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -79,7 +84,7 @@ func create_output_sockets(count : int) -> void:
 	var spacing = panel_width / (count + 1)
 	
 	for i in range(count):
-		var socket = ScriptingSocket.new(false, "Input " + str(i + 1))
+		var socket = ScriptingSocket.new(false, "Input " + str(i + 1), i)
 		socket.texture_normal = wait_texture
 		socket.position = Vector2(spacing*(i+1) - (socket.size.x / 2), $Panel.size.y)  # Adjust positioning based on layout needs
 		socket.mouse_filter = Control.MOUSE_FILTER_PASS
@@ -88,17 +93,36 @@ func create_output_sockets(count : int) -> void:
 		output_sockets.append(socket)
 
 func populate_options() -> void:
+	var i = 0
 	for option in options:
+		index_to_option[i] = option
+		i += 1
 		$Panel/OptionButton.add_item(str(option))
 	$Panel/OptionButton.item_selected.connect(update_func_opts)
-
+	$Panel/OptionButton.toggled.connect(_option_menu_toggled)
+	$Panel/OptionButton.selected = int(len(options) / 2)
+	if len(options) > 0:
+		func_node.inputs = index_to_option[int(len(options) / 2)]
 
 ##################################################
 # UI interacted with
 ##################################################
+func _option_menu_toggled(toggled : bool):
+	if toggled and not drop_menu_open:
+		# menu just opened
+		$Panel/OptionButton.mouse_filter = MOUSE_FILTER_STOP
+	elif not toggled and drop_menu_open:
+		# menu just closed
+		get_parent().get_parent().get_parent().submenu_just_closed = true
+		$Panel/OptionButton.mouse_filter = MOUSE_FILTER_PASS
+		drop_menu_just_closed = true
+	drop_menu_open = toggled
 
-func update_func_opts(option):
-	func_node.inputs = option
+func update_func_opts(index):
+	if index in index_to_option:
+		func_node.inputs = index_to_option[index]
+	else:
+		func_node.inputs = index
 
 func set_text(text : String) -> void:
 	$Panel/RichTextLabel.text = text
@@ -117,6 +141,13 @@ func _on_button_released() -> void:
 
 # This function will be called every time input is received
 func _input(event: InputEvent) -> void:
+	# check for drop menu
+	if drop_menu_just_closed:
+		drop_menu_just_closed = false
+		dragging = false
+		mouseover = false
+		return
+		
 	# Check for mouse button events
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:

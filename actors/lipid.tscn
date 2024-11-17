@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://bwljq104cxvm"]
 
-[ext_resource type="Script" path="res://lipid.gd" id="1_ak5lt"]
+[ext_resource type="Script" path="res://actors/lipid.gd" id="1_ak5lt"]
 [ext_resource type="Texture2D" uid="uid://btynd0h4jaqx0" path="res://assets/lipids/wall_piece.png" id="2_cwrsn"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_vk247"]
@@ -35,4 +35,4 @@ rotation = 1.04022
 shape = SubResource("CapsuleShape2D_sn845")
 
 [node name="DeathTimer" type="Timer" parent="."]
-wait_time = 30.0
+wait_time = 60.0

@@ -3,7 +3,7 @@ extends RigidBody2D
 var gravity_strength = 50
 var target_metabolite = null
 var can_consume = true
-var cooldown_time = 5
+var cooldown_time = 2
 var lifespan = 40
 var type = 0
 var potential_eats = []
@@ -43,7 +43,6 @@ func _process(delta):
 		
 # Detect when metabolite is nearby
 func _body_entered_range(body):
-	var parent = get_parent()
 	if body.is_in_group("metabolites") and body.type == type and body in get_parent().metabolites:
 		if can_consume and not target_metabolite and not body.selected:
 			target_metabolite = body

@@ -5,9 +5,9 @@ extends RigidBody2D
 @export var lipid_scene : PackedScene
 
 var function_tree : ScriptingLinks = null
-var UI_check : bool = true # should this have a UI to show? for ribosomes made by ribosomes
 var UI : Control = null
 var lifespan = 120
+var locked : bool = false # if so, cannot be modified, disconnect from UI elements
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -35,7 +35,8 @@ func spawn_ribosome() -> void:
 	# create new ribosome instance
 	var ribo_scene: PackedScene = load("res://actors/ribosome.tscn")
 	var ribo = ribo_scene.instantiate()
-	ribo.function_tree = function_tree.duplicate()
+	ribo.function_tree = function_tree.duplicate(ribo)
+	ribo.locked = true
 	
 	# select a spawn location
 	var pos = self.position
@@ -91,7 +92,9 @@ func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> voi
 		self.open_ui()
 
 func open_ui() -> void:
-	if UI == null and UI_check:
+	if locked:
+		pass
+	elif UI == null:
 		UI = tuning_panel.instantiate()
 		function_tree.tree_reset.connect(UI.get_node('HBoxContainer').get_node('Whiteboard')._on_function_tree_reset)
 		UI.source_node = self
