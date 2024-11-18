@@ -13,7 +13,7 @@ var run = false
 
 signal func_output # there's multiple outputs now, this doesn't work, how about you send a message for them to do this
 
-func _init(_func_ref, max_children : int, _inputs = null, ):
+func _init(_func_ref, max_children : int, _inputs = null):
 	func_ref = _func_ref
 	var null_array = []
 	null_array.resize(max_children)

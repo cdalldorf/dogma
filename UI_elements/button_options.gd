@@ -10,7 +10,7 @@ func _init() -> void:
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	# finding the tuning panel... I think
-	var root = get_parent().get_parent().get_parent()
+	var root = get_parent().get_parent().get_parent().get_parent()
 	# set up buttons (text, function, number inputs, number outputs, options = []), should eventually be an input to here somehow
 	if root.source_node:
 		var input_tuple = [

@@ -5,12 +5,46 @@ var mouseover = false
 var dragging = false
 var wire_drag = null
 var submenu_just_closed = false
-	
+@onready var file_dialog_save = $Save_FileDialog
+@onready var file_dialog_load = $Load_FileDialog
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	$HBoxContainer/Whiteboard.wires_connect.connect(_wires_connect)
-	pass # Replace with function body.
+	# connect load and save buttons
+	$HBoxContainer/VBoxContainer/HBoxContainer/Load_Button.pressed.connect(_load_config)
+	$HBoxContainer/VBoxContainer/HBoxContainer/Save_Button.pressed.connect(_save_config)
+	$Save_FileDialog.file_selected.connect(_save_file)
+	$Load_FileDialog.file_selected.connect(_load_file)
 
+func _load_config():
+	file_dialog_load.current_path = 'res://player_created_data/saved_configurations/'
+	file_dialog_load.size = Vector2(400, 300)
+	file_dialog_load.filters = ['*.dogma_config']
+	file_dialog_load.popup_centered()
+
+func _load_file(path : String):
+	# load in file, overwrite current function tree with it
+	var file = FileAccess.open(path, FileAccess.READ)
+	var file_contents = file.get_as_text()
+	file.close()
+	var new_func_tree = ScriptingLinks.unserialize(file_contents, get_parent())
+	get_parent().function_tree = new_func_tree
+	# TO DO - make this appear in the UI also
+	
+func _save_config():
+	file_dialog_save.current_path = 'res://player_created_data/saved_configurations/'
+	file_dialog_save.size = Vector2(400, 300)
+	file_dialog_save.filters = ['*.dogma_config']
+	file_dialog_save.popup_centered()
+
+func _save_file(path : String):
+	# convert the function_tree to a recreatable format
+	var saved_data = get_parent().function_tree.serialize()
+	var file = FileAccess.open(path, FileAccess.WRITE)
+	if file:
+		file.store_string(saved_data)
+		file.close()
 
 # This function will be called every time input is received
 func _input(event: InputEvent) -> void:

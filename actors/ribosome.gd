@@ -32,6 +32,10 @@ func timer_tick() -> void:
 ############################################################################
 
 func spawn_ribosome() -> void:
+	# if not enough ATP, cannot do
+	if get_parent().ATP_ct < 50:
+		return
+		
 	# create new ribosome instance
 	var ribo_scene: PackedScene = load("res://actors/ribosome.tscn")
 	var ribo = ribo_scene.instantiate()
@@ -51,7 +55,11 @@ func spawn_ribosome() -> void:
 	get_parent().add_child(ribo)
 
 func spawn_protein(prot_type : int = 0) -> void:
-		# create new ribosome instance
+	# if not enough ATP, cannot do
+	if get_parent().ATP_ct < 1:
+		return
+		
+	# create new ribosome instance
 	var prot = protein_scene.instantiate()
 	prot.setup(prot_type)
 	
@@ -68,6 +76,10 @@ func spawn_protein(prot_type : int = 0) -> void:
 	get_parent().add_child(prot)
 
 func spawn_lipid() -> void:
+	# if not enough ATP, cannot do
+	if get_parent().ATP_ct < 1:
+		return
+		
 	var lipid = lipid_scene.instantiate()
 	
 	# select a spawn location

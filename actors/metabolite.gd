@@ -9,7 +9,10 @@ func _ready() -> void:
 	$DeathTimer.start()
 
 func _on_death_timer_timeout() -> void:
-	queue_free()
+	if selected:
+		$DeathTimer.start()
+	else:
+		queue_free()
 
 func update_appearance() -> void:
 	if type == 1:
