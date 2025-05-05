@@ -7,6 +7,7 @@ var wire_drag = null
 var submenu_just_closed = false
 @onready var file_dialog_save = $Save_FileDialog
 @onready var file_dialog_load = $Load_FileDialog
+signal closed
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -28,7 +29,7 @@ func _load_file(path : String):
 	var file = FileAccess.open(path, FileAccess.READ)
 	var file_contents = file.get_as_text()
 	file.close()
-	var new_func_tree = ScriptingLinks.unserialize(file_contents, get_parent())
+	var new_func_tree = ScriptingLinks.unserialize(file_contents, get_parent().start_ribo)
 	get_parent().function_tree = new_func_tree
 	# TO DO - make this appear in the UI also
 	
@@ -58,7 +59,7 @@ func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton:
 		if event.button_index == MOUSE_BUTTON_LEFT:
 			if event.pressed and not mouseover:
-				self.hide()
+				close_tuning_panel()
 			elif event.pressed and mouseover:
 				dragging = true
 			elif not event.pressed:
@@ -80,6 +81,12 @@ func _on_mouse_entered() -> void:
 func _on_mouse_exited() -> void:
 	mouseover = false
 
+func close_tuning_panel() -> void:
+	# let's close the tuning panel
+	get_parent().locked = true
+	closed.emit()
+	self.queue_free()
+	self.hide()
 
 # Handle button press event
 func _on_button_pressed() -> void:

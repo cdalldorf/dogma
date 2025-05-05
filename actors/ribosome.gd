@@ -1,13 +1,10 @@
 extends RigidBody2D
 
 @export var protein_scene: PackedScene
-@export var tuning_panel : PackedScene
 @export var lipid_scene : PackedScene
 
 var function_tree : ScriptingLinks = null
-var UI : Control = null
 var lifespan = 120
-var locked : bool = false # if so, cannot be modified, disconnect from UI elements
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -26,6 +23,8 @@ func timer_tick() -> void:
 	# restart the timer
 	$ProcessTimer.start() 
 
+func _on_death_timer_timeout():
+	queue_free()
 
 ############################################################################
 ### Spawn Functions
@@ -40,7 +39,6 @@ func spawn_ribosome() -> void:
 	var ribo_scene: PackedScene = load("res://actors/ribosome.tscn")
 	var ribo = ribo_scene.instantiate()
 	ribo.function_tree = function_tree.duplicate(ribo)
-	ribo.locked = true
 	
 	# select a spawn location
 	var pos = self.position
@@ -93,23 +91,3 @@ func spawn_lipid() -> void:
 	lipid.linear_velocity = Vector2(cos(angle), sin(angle)) * speed
 	
 	get_parent().add_child(lipid)
-
-
-
-func _on_death_timer_timeout():
-	queue_free()
-	
-func _on_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
-	if (event.is_pressed()):
-		self.open_ui()
-
-func open_ui() -> void:
-	if locked:
-		pass
-	elif UI == null:
-		UI = tuning_panel.instantiate()
-		function_tree.tree_reset.connect(UI.get_node('HBoxContainer').get_node('Whiteboard')._on_function_tree_reset)
-		UI.source_node = self
-		add_child(UI)
-	else:
-		UI.show()

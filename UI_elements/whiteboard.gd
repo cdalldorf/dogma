@@ -7,7 +7,7 @@ signal wires_connect(input : Node, output : Node)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	# finding butto
+	# finding buttons
 	var butt_opts = get_parent().get_node('VBoxContainer').get_node('ScrollContainer').get_child(0)
 	butt_opts.new_scripting_window.connect(_new_scripting_window)
 	

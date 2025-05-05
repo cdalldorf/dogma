@@ -6,7 +6,7 @@ extends Node2D
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$HUD/RibosomeButton.pressed.connect(_on_hud_ribo_button)
+	$HUD/EnemyButton.pressed.connect(_on_hud_enemy_button)
 	
 	# for now just spawn one cell to play around with
 	var cell = cell_scene.instantiate()
@@ -23,9 +23,18 @@ func spawn_metab(location : Vector2, type : int) -> void:
 	metab.position = location
 	add_child(metab)
 
-func _on_hud_ribo_button() -> void:
-	spawn_ribosome()
-	
+func _on_hud_enemy_button() -> void:
+	spawn_enemy()
+
+func spawn_enemy() -> void:
+	# instantiate a new cell, load in an enemy configuration, make it uneditable, give it default behavior
+	var cell = cell_scene.instantiate()
+	add_child(cell)
+	cell.enemy = true
+	cell.start_ribo
+	cell.load_function_tree('default')
+	cell.position = get_viewport_rect().size / 4
+	add_child(cell)
 	
 func spawn_ribosome() -> void:
 	# create new ribosome instance
